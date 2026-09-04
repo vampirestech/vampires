@@ -125,6 +125,155 @@ nav::after{
     box-shadow:0 0 24px rgba(226,57,74,0.55);
 }
 
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.google-signin-btn{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.5px;
+    color:var(--bone);
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    padding:9px 16px;
+    border-radius:2px;
+    cursor:pointer;
+    transition:0.25s;
+}
+.google-signin-btn:hover{
+    border-color:var(--blood);
+    box-shadow:0 0 16px rgba(194,32,48,0.3);
+}
+
+.user-chip{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--muted);
+}
+.user-avatar{
+    width:26px; height:26px;
+    border-radius:50%;
+    border:1px solid var(--panel-line);
+}
+.admin-btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    color:var(--ink);
+    background:var(--blood-bright);
+    border:none;
+    padding:7px 13px;
+    border-radius:2px;
+    cursor:pointer;
+    transition:0.25s;
+}
+.admin-btn:hover{background:var(--bone);}
+.signout-btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--muted);
+    background:transparent;
+    border:1px solid var(--panel-line);
+    padding:7px 13px;
+    border-radius:2px;
+    cursor:pointer;
+    transition:0.25s;
+}
+.signout-btn:hover{border-color:var(--blood); color:var(--bone);}
+
+/* ---------- ADMIN MODAL ---------- */
+.admin-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(5,4,5,0.82);
+    z-index:2000;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+}
+.admin-overlay.open{display:flex;}
+.admin-panel{
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    width:100%;
+    max-width:560px;
+    max-height:78vh;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 30px 70px -20px rgba(0,0,0,0.7);
+}
+.admin-panel-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 24px;
+    border-bottom:1px solid var(--panel-line);
+}
+.admin-panel-head h3{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:22px;
+}
+.admin-close{
+    background:none;
+    border:none;
+    color:var(--muted);
+    font-size:26px;
+    line-height:1;
+    cursor:pointer;
+    transition:0.2s;
+}
+.admin-close:hover{color:var(--blood-bright);}
+.admin-list{
+    overflow-y:auto;
+    padding:10px 24px 24px;
+}
+.admin-loading, .admin-empty{
+    color:var(--muted);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    padding:16px 0;
+}
+.admin-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid var(--panel-line);
+}
+.admin-row img{
+    width:32px; height:32px;
+    border-radius:50%;
+    flex-shrink:0;
+}
+.admin-row .who{
+    font-size:13.5px;
+    color:var(--bone);
+}
+.admin-row .when{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    color:var(--muted);
+    margin-top:2px;
+}
+
+@media (max-width:640px){
+    .nav-right{gap:8px;}
+    .google-signin-btn span, .user-chip #user-name{display:none;}
+    .contact-now{padding:9px 14px; font-size:10.5px;}
+}
+
 /* ---------- SECTIONS ---------- */
 section{
     position:relative;
@@ -518,8 +667,32 @@ footer{
         <li><a href="#process">Process</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
-    <a class="contact-now" href="https://mail.google.com/mail/?view=cm&fs=1&to=vampirestech28@gmail.com" target="_blank" rel="noopener">Contact Us Now</a>
+    <div class="nav-right">
+        <button id="google-signin-btn" class="google-signin-btn">
+            <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.9 32.6 29.4 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 15.9 18.9 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6 29.5 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.4 0 10.3-1.8 14-5l-6.5-5.5C29.5 35.3 26.9 36 24 36c-5.4 0-9.9-3.4-11.3-8.1l-6.6 5.1C9.6 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.7 2.1-2 3.9-3.8 5.2l6.5 5.5C39.9 37 44 31.1 44 24c0-1.3-.1-2.7-.4-3.5z"/></svg>
+            <span>Sign in</span>
+        </button>
+        <div id="user-chip" class="user-chip" style="display:none;">
+            <img id="user-avatar" class="user-avatar" src="" alt="">
+            <span id="user-name"></span>
+            <button id="admin-btn" class="admin-btn" style="display:none;">Admin</button>
+            <button id="signout-btn" class="signout-btn">Sign out</button>
+        </div>
+        <a class="contact-now" href="https://mail.google.com/mail/?view=cm&fs=1&to=vampirestech28@gmail.com" target="_blank" rel="noopener">Contact Us Now</a>
+    </div>
 </nav>
+
+<div id="admin-overlay" class="admin-overlay">
+    <div class="admin-panel">
+        <div class="admin-panel-head">
+            <h3>Signed-in visitors</h3>
+            <button id="admin-close" class="admin-close">&times;</button>
+        </div>
+        <div id="admin-list" class="admin-list">
+            <p class="admin-loading">Loading…</p>
+        </div>
+    </div>
+</div>
 
 <section class="hero">
     <div class="eyebrow">We Build. We Create. We Dominate. We Evolve.</div>
@@ -815,6 +988,125 @@ footer{
             card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
         });
     });
+})();
+</script>
+<!-- ============ FIREBASE: Google Sign-In + Admin sign-in log ============ -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+(function(){
+    const firebaseConfig = {
+        apiKey: "AIzaSyChSUVElLljdPx5BSFnveiz1bydTHd3vsI",
+        authDomain: "vampires-tech-2.firebaseapp.com",
+        projectId: "vampires-tech-2",
+        storageBucket: "vampires-tech-2.firebasestorage.app",
+        messagingSenderId: "369585596565",
+        appId: "1:369585596565:web:6342f312c79a3392a6539c"
+    };
+
+    const OWNER_EMAIL = "vampirestech28@gmail.com";
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    const signinBtn   = document.getElementById('google-signin-btn');
+    const userChip     = document.getElementById('user-chip');
+    const userAvatar   = document.getElementById('user-avatar');
+    const userName      = document.getElementById('user-name');
+    const adminBtn       = document.getElementById('admin-btn');
+    const signoutBtn     = document.getElementById('signout-btn');
+    const adminOverlay   = document.getElementById('admin-overlay');
+    const adminClose     = document.getElementById('admin-close');
+    const adminList      = document.getElementById('admin-list');
+
+    signinBtn.addEventListener('click', () => {
+        auth.signInWithPopup(provider).catch((err) => {
+            console.error('Sign-in failed', err);
+        });
+    });
+
+    signoutBtn.addEventListener('click', () => {
+        auth.signOut();
+    });
+
+    adminBtn.addEventListener('click', () => {
+        openAdminPanel();
+    });
+    adminClose.addEventListener('click', () => {
+        adminOverlay.classList.remove('open');
+    });
+    adminOverlay.addEventListener('click', (e) => {
+        if (e.target === adminOverlay) adminOverlay.classList.remove('open');
+    });
+
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            signinBtn.style.display = 'none';
+            userChip.style.display = 'flex';
+            userAvatar.src = user.photoURL || '';
+            userName.textContent = user.displayName || user.email;
+
+            if (user.email === OWNER_EMAIL) {
+                adminBtn.style.display = 'inline-block';
+            } else {
+                adminBtn.style.display = 'none';
+            }
+
+            // Log this sign-in (allowed for any authenticated user by the Firestore rules)
+            db.collection('signins').add({
+                uid: user.uid,
+                email: user.email,
+                name: user.displayName || '',
+                photoURL: user.photoURL || '',
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            }).catch((err) => console.error('Could not log sign-in', err));
+
+        } else {
+            signinBtn.style.display = 'flex';
+            userChip.style.display = 'none';
+            adminBtn.style.display = 'none';
+        }
+    });
+
+    function openAdminPanel(){
+        adminOverlay.classList.add('open');
+        adminList.innerHTML = '<p class="admin-loading">Loading…</p>';
+
+        db.collection('signins').orderBy('timestamp', 'desc').limit(200).get()
+            .then((snapshot) => {
+                if (snapshot.empty) {
+                    adminList.innerHTML = '<p class="admin-empty">No sign-ins yet.</p>';
+                    return;
+                }
+                adminList.innerHTML = '';
+                snapshot.forEach((doc) => {
+                    const d = doc.data();
+                    const when = d.timestamp ? d.timestamp.toDate().toLocaleString() : '—';
+                    const row = document.createElement('div');
+                    row.className = 'admin-row';
+                    row.innerHTML = `
+                        <img src="${d.photoURL || ''}" alt="">
+                        <div>
+                            <div class="who">${escapeHtml(d.name || '(no name)')} — ${escapeHtml(d.email || '')}</div>
+                            <div class="when">${when}</div>
+                        </div>`;
+                    adminList.appendChild(row);
+                });
+            })
+            .catch((err) => {
+                console.error(err);
+                adminList.innerHTML = '<p class="admin-empty">Could not load sign-ins. Check Firestore rules.</p>';
+            });
+    }
+
+    function escapeHtml(str){
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
 })();
 </script>
 </body>
